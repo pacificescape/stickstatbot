@@ -12,7 +12,7 @@ bot.use((ctx, next) => {
 
 bot.use((ctx) => {
     newUser(ctx.message)
-    .then((msg) => ctx.reply(msg))
+    // .then((msg) => ctx.reply(msg))
     .catch((err) => console.log(err))
 })
 

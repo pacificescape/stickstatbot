@@ -6,12 +6,10 @@ module.exports = ({chat}) => new Promise(async (resolve, reject) => {
             body: chat,
             json: true
         })
-        .then((res) => {
-            resolve(res.body.message)
-        })
+        .then(() => resolve())
         .catch((err) => {
-            console.log(err)
-            reject(res.body.message)
+            console.log('bot: Ошибка метода /newUser')
+            reject(err)
         })
     } catch (error) {
         console.log(error)
