@@ -1,5 +1,11 @@
-const newUser = require('./newUser')
+const checkUser = require('./checkUser')
+const checkForward = require('./checkForward')
+const parseStats = require('./parseStats')
+const setStats = require('./setStats')
 
 module.exports = {
-    newUser,
+    checkUser,
+    checkForward,
+    parseStats,
+    setStats,
 }

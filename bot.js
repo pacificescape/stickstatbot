@@ -1,8 +1,18 @@
 const Telegraf = require('telegraf')
 const bot = new Telegraf(process.env.BOT_TOKEN)
-const { newUser } = require('./bot/handlers')
+const {
+    checkUser,
+    checkForward,
+    setStats
+} = require('./bot/handlers')
 
-bot.start((ctx => ctx.reply('Welcome')))
+
+// bot.use((ctx, next) => {
+//     parseStats(ctx.message)
+//     .then((res) => {
+//         console.log(res)
+//     })
+// })
 
 bot.use((ctx, next) => {
     if (!ctx.message.forward_from || ctx.message.forward_from.id != 429000) {
@@ -10,20 +20,37 @@ bot.use((ctx, next) => {
     } else next()
 })
 
-bot.use((ctx) => {
-    newUser(ctx.message)
+bot.use((ctx, next) => {
+    checkForward(ctx.message) ? next() : ctx.reply('forwarded data is too old. you have only 5 minutes to forward stata')
+})
+
+bot.use((ctx, next) => {
+    console.log(ctx.message)
+    checkUser(ctx.message)
     // .then((msg) => ctx.reply(msg))
     .catch((err) => console.log(err))
+    next()
 })
 
 bot.on('message', (ctx) => {
-    console.log(ctx.message)
+    setStats(ctx.message)
 })
 
-bot.catch((err, ctx) => {
-  console.log(`Ooops, ecountered an error `, err)
-})
+bot.command('help', (ctx) => ctx.reply('перешлите мне сообщения со статистикой от бота'))
 
-bot.launch()
+bot.start((ctx => ctx.reply('Welcome')))
+bot.catch((err) => console.log(`Ooops, ecountered an error `, err))
+bot.launch() 
+.then(() => console.log('bot started'))
 
 
+
+
+
+
+
+
+
+// проверять не только ттл но и совпадения числа
+// scene для получения топа стикеров в паке. качать файл для отображения. создать коллекцию с file_id. модуль получения файла по айди. 
+// getStickerSet -> StickerSet object is returned.

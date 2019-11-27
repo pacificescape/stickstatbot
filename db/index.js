@@ -5,7 +5,8 @@ mongoose.Promise = global.Promise
 const uri = process.env.MONGO_DB_URI
 
 mongoose.connect(uri, {
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useUnifiedTopology: true
 })
 .catch((error) => console.log(error))
 const db = mongoose.connection

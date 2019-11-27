@@ -13,9 +13,8 @@ router.post('/addTask', async (ctx) => {
     }
 })
 
-router.post('/newUser', async (ctx) => { // перенести в middleware
+router.post('/checkUser', async (ctx) => {
     try {
-        // заносим User в Users
         await newUser.checkUser(ctx.request.body.id)
         .then(async (res) => {
             if (!res.success) {
@@ -26,16 +25,6 @@ router.post('/newUser', async (ctx) => { // перенести в middleware
                 ctx.body = {}
             }
         })  
-    } catch (error) {
-        console.log(error)
-        ctx.status = 400
-        ctx.body = { message: 'Internal error' }
-    }
-})
-
-router.post('/checkUser', async (ctx) => {
-    try {
-        // заносим User в Users
 
         ctx.status = 200
         ctx.body = { message: 'New User added' }
