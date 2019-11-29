@@ -25,3 +25,5 @@ process.on('SIGINT', () => {
         process.exit(0)
     })
 })
+
+// по нормальному подключить db

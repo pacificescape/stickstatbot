@@ -10,17 +10,15 @@ exports.newUser = (chat) => new Promise(async (resolve, reject) => {
                 message: 'user is required'
             })
         }
-        let {id, first_name, username} = chat
 
+        let { telegram_id = id, first_name, username } = chat
         const newUser = new User({
-            id,
+            telegram_id,
             first_name,
             username
         })
 
         const user = await newUser.save()
-        
-       
 
         resolve({
             success: true,
@@ -32,11 +30,11 @@ exports.newUser = (chat) => new Promise(async (resolve, reject) => {
 })
 
 exports.checkUser = (id) => new Promise(async (resolve, reject) => {
-    try {
-        let user = await User.find({id})
-        if(user.length) resolve({success: true})
-        resolve({success: false})
+    try { // обнулить базу, дописать юзера, проверку, добавление, связь с паками.
+        let user = await User.find({ id })
+        if (user.length) resolve({ success: true })
+        resolve({ success: false })
     } catch (error) {
-        reject({success: false})
+        reject({ success: false })
     }
 })

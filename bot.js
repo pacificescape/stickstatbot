@@ -27,13 +27,14 @@ bot.use((ctx, next) => {
 bot.use((ctx, next) => {
     console.log(ctx.message)
     checkUser(ctx.message)
-    // .then((msg) => ctx.reply(msg))
     .catch((err) => console.log(err))
     next()
 })
 
-bot.on('message', (ctx) => {
+bot.on('message', async (ctx) => {
     setStats(ctx.message)
+    let pack = await ctx.getStickerSet('fkey123')
+    console.log(pack)
 })
 
 bot.command('help', (ctx) => ctx.reply('перешлите мне сообщения со статистикой от бота'))
@@ -50,7 +51,7 @@ bot.launch()
 
 
 
-
+// проверять добавлена ли главная статистика packstatsю без нее не давать делать ничего
 // проверять не только ттл но и совпадения числа
 // scene для получения топа стикеров в паке. качать файл для отображения. создать коллекцию с file_id. модуль получения файла по айди. 
 // getStickerSet -> StickerSet object is returned.

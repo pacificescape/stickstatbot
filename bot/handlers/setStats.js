@@ -4,7 +4,8 @@ const parseStats = require('./parseStats')
 module.exports = async (message) => {
     try {
         let stats = parseStats(message)
-        got.post(`http://localhost:3000/setStats:${stats.type}`, {
+        stats = {...stats, forward_date: message.forward_date, date: message.date, telegram_id: message.from.id}
+        got.post(`http://localhost:3000/setStats`, {
             body: stats,
             json: true
         })
@@ -13,5 +14,4 @@ module.exports = async (message) => {
     } catch (error) {
         console.log(error)
     }
-
 }

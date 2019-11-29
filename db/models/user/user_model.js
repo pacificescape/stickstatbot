@@ -1,22 +1,17 @@
 const mongoose = require('mongoose')
 
-const Schema = new mongoose.Schema({
-    date: {
-        type: Date,
-        default: new Date()
-    },
-    id: {
+const Schema = new mongoose.Schema({ // владелец пака указан в паке
+    telegram_id: {
         type: Number,
+        index: true,
+        unique: true,
         required: [true, 'id is required']
     },
-    first_name: {
-        type: String,
-        default: ''
-    },
-    username: {
-        type: String,
-        default: ''
-    }
+    first_name: String,
+    last_name: String,
+    username: String,
+}, {
+    timestamps: true,
 })
 
 module.exports = mongoose.model('User', Schema, 'Users')

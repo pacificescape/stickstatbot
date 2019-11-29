@@ -13,6 +13,8 @@ const Schema = new mongoose.Schema({
         type: String,
         default: ''
     }
+}, {
+    timestamps: true,
 })
 
-module.exports = mongoose.model('Task', Schema, 'Tasks')
+module.exports = mongoose.model('Pack', Schema, 'Packs')

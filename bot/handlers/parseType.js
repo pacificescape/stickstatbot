@@ -1,11 +1,13 @@
 module.exports = (text) => {
     let day = text.match(/\d{2,2}\/\d{2,2}\/\d{4,4}/g)[0]
 
+    text = text.split(/\n/)
+
     stats = {
         day: Date.parse(day),
-        usage: +text.split(/\n/)[2].match(/\d+/)[0],
-        installed: +text.split(/\n/)[3].match(/\d+/)[0],
-        removed: +text.split(/\n/)[4].match(/\d+/)[0]
+        usage: +text[2].match(/\d+/)[0],
+        installed: +text[3].match(/\d+/)[0],
+        removed: +text[4].match(/\d+/)[0]
     }
 
     console.log(stats)

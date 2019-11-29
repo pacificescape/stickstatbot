@@ -13,7 +13,7 @@ app.use(router.routes())
 app.use(router.allowedMethods())
 
 app.use(async ctx => {
-  ctx.body = 'Hello World';
+  ctx.body = {message: 'Hello Word'};
 });
 
 app.listen(3000);
