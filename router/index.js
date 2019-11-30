@@ -1,6 +1,6 @@
 const Router = require('koa-router')
 const router = new Router()
-const { Task, newUser, Stats } = require('../api')
+const { Task, User, Stats } = require('../api')
 
 router.post('/addTask', async (ctx) => {
     try {
@@ -13,10 +13,10 @@ router.post('/addTask', async (ctx) => {
     }
 })
 
-router.post('/checkUser', async (ctx) => {
+router.post('/checkUser', async (ctx) => { // не нужен отдельный метод
     let message = ctx.request.body
     try {
-        await newUser.checkUser(message)
+        await User.checkUser(message)
             .then(async (res) => {
                 if (!res.success) {
                     res.success ? ctx.body = { message: 'New User added' } : ctx.body = { message: 'Internal error' }
@@ -46,12 +46,19 @@ router.get('/getTasks', async (ctx) => {
 })
 
 router.post('/setStats', async (ctx) => {
+    let {message, stats} = ctx.request.body
+    
     try {
-        let result = await Stats.setStats(ctx.request.body)
-        console.log(result)
+        await User.checkUser(message)
+        .then(async user => Stats.setStats(ctx.request.body, user))
+        .then(() => {
+            ctx.status = 200,
+            ctx.body = {ok: true}
+    })
+        .catch((err) => console.log(err))
     } catch (error) {
         ctx.status = 500
-        ctx.body = 'Internal error'
+        ctx.body = {ok: false, message: error}
     }
 })
 

@@ -32,7 +32,9 @@ const User = require('../db/models/user/user_model.js')
 //     }
 // })
 
- exports.checkUser = (message) => new Promise(async (resolve, reject) => {
+// создаёт и обновляет пользователя
+
+exports.checkUser = (message) => new Promise(async (resolve, reject) => {
     let {
         chat: {
             id: telegram_id,
@@ -46,25 +48,26 @@ const User = require('../db/models/user/user_model.js')
             }
         } = {}
     } = message
-    let userMsg = {telegram_id,first_name,last_name,username,stickerpacks: [url]}
+    let userMsg = { telegram_id, first_name, last_name, username, stickerpacks: [url] }
     try {
         let user = await User.findOne({ telegram_id })
-        if (user) {
-            if(!user.stickerpacks.includes(url)) user.stickerpacks.push(url)
-            await user.update({
-                first_name,
-                last_name,
-                username,
-                stickerpacks: user.stickerpacks
-            })
-
-            resolve({ success: true, user })
-        } else if (!user) {
+        if (!user) {
             user = new User(userMsg)
             user.save()
-            .then(() => resolve({ success: true, user }))
+                .then(() => resolve(user))
         }
+
+        if (user && !user.stickerpacks.includes(url)) user.stickerpacks.push(url)
+
+        await user.updateOne({
+            first_name,
+            last_name,
+            username,
+            stickerpacks: user.stickerpacks
+        })
+
+        resolve(user)
     } catch (error) {
-        reject(error)
-    }
+    reject(error)
+}
 })

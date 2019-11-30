@@ -10,7 +10,6 @@ module.exports = (text) => {
         total_removed: +text[12].match(/\d+/)[0]
     }
 
-    console.log(stats)
     return stats
 }
-// доделать обработку двух дней из /packstats
+// доделать обработку "вчера" и "сегодня" из /packstats

@@ -1,9 +1,9 @@
 const Task = require('./Task')
 const Stats = require('./Stats')
-const newUser = require('./newUser')
+const User = require('./User')
 
 module.exports = {
     Task,
     Stats,
-    newUser
+    User
 }

@@ -1,3 +1,5 @@
+// require('dotenv').config()
+
 const Telegraf = require('telegraf')
 const bot = new Telegraf(process.env.BOT_TOKEN)
 const {
@@ -24,17 +26,21 @@ bot.use((ctx, next) => {
     checkForward(ctx.message) ? next() : ctx.reply('forwarded data is too old. you have only 5 minutes to forward stata')
 })
 
-bot.use((ctx, next) => {
-    console.log(ctx.message)
-    checkUser(ctx.message)
-    .then(() => next())
-    .catch((err) => console.log(err))
-})
+// bot.use((ctx, next) => {
+//     console.log(ctx.message)
+//     checkUser(ctx.message)
+//     .then(() => next())
+//     .catch((err) => console.log(err))
+// })
 
 bot.on('message', async (ctx) => {
-    setStats(ctx.message)
+    await setStats(ctx.message)
+    .then((res) => {
+        res.body.ok ? ctx.reply('Статистика успешно добалена!')
+            : ctx.reply('server res:' + res.body.message)
+    })
     let pack = await ctx.getStickerSet('fkey123')
-    console.log(pack)
+    // console.log(pack)
 })
 
 bot.command('help', (ctx) => ctx.reply('перешлите мне сообщения со статистикой от бота'))

@@ -1,33 +1,41 @@
 const Stats = require('../db/models/stats/stats_model')
 const User = require('../db/models/user/user_model')
-const newUser = require('../api/newUser')
 
 
-exports.setStats = (stats) => new Promise(async (resolve, reject) => {
+exports.setStats = ({message, stats}, user) => new Promise(async (resolve, reject) => {
     console.log(stats)
     console.log(new Date(stats.day).toLocaleDateString())
     try {        
-        const newStats = new Stats({
-            title,
-            description
-        })
+        // дописать модель статистики
+        // проверить статистику по имени пака ключу дате
 
-        const stat = await newStats.save()
+        // const newStats = new Stats({
+        //     title,
+        //     description
+        // })
 
-        resolve({
-            success: true,
-            data: stat
-        })
+        // const stat = await newStats.save()
+
+        resolve({suck:'sex'})
     } catch (error) {
         reject()
     }
 })
 
-exports.getStats = () => new Promise(async (resolve, reject) => {
+// date:1575137532
+// day:1442440800000
+// forward_date:1575086214
+// telegram_id:613242355
+// total_installed:156
+// total_removed:6
+// total_usage:408
+// type:"main"
+
+exports.getStats = (message, user) => new Promise(async (resolve, reject) => {
     try {
         console.log('getStats')
-        let tasks = await Task.find()
-        resolve(tasks)
+        // let stats = await Stats.find()
+        resolve({suck:'sex'})
     } catch (error) {
         reject()
     }

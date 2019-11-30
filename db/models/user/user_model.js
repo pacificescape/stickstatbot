@@ -3,14 +3,16 @@ const mongoose = require('mongoose')
 const Schema = new mongoose.Schema({ // владелец пака указан в паке
     telegram_id: {
         type: Number,
-        index: true,
         unique: true,
         required: [true, 'id is required']
     },
     first_name: String,
     last_name: String,
     username: String,
-    stickerpacks: Array
+    stickerpacks: {
+        type: Array,
+        default: []
+    }
 }, {
     timestamps: true,
 })
