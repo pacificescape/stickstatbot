@@ -27,8 +27,8 @@ bot.use((ctx, next) => {
 bot.use((ctx, next) => {
     console.log(ctx.message)
     checkUser(ctx.message)
+    .then(() => next())
     .catch((err) => console.log(err))
-    next()
 })
 
 bot.on('message', async (ctx) => {

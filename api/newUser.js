@@ -2,39 +2,69 @@ const User = require('../db/models/user/user_model.js')
 
 
 
-exports.newUser = (chat) => new Promise(async (resolve, reject) => {
+// exports.newUser = (stats) => new Promise(async (resolve, reject) => {
+//     try {
+//         let user = await User.find({ telegram_id: stats.id })
+//         if (user.length) resolve({ success: true, user })
+
+//         if (!stats) {
+//             resolve({
+//                 success: false,
+//                 message: 'user is required'
+//             })
+//         }
+
+//         let { telegram_id = stats.id, first_name, username } = stats
+//         const newUser = new User({
+//             telegram_id,
+//             first_name,
+//             username
+//         })
+
+//         user = await newUser.save()
+
+//         resolve({
+//             success: true,
+//             user
+//         })
+//     } catch (error) {
+//         reject(error)
+//     }
+// })
+
+ exports.checkUser = (message) => new Promise(async (resolve, reject) => {
+    let {
+        chat: {
+            id: telegram_id,
+            first_name = '',
+            last_name = '',
+            username = ''
+        } = {},
+        entities: {
+            0: {
+                url
+            }
+        } = {}
+    } = message
+    let userMsg = {telegram_id,first_name,last_name,username,stickerpacks: [url]}
     try {
-        if (!chat) {
-            resolve({
-                success: false,
-                message: 'user is required'
+        let user = await User.findOne({ telegram_id })
+        if (user) {
+            if(!user.stickerpacks.includes(url)) user.stickerpacks.push(url)
+            await user.update({
+                first_name,
+                last_name,
+                username,
+                stickerpacks: user.stickerpacks
             })
+
+            resolve({ success: true, user })
+        } else if (!user) {
+            user = new User(userMsg)
+            user.save()
+            .then(() => resolve({ success: true, user }))
         }
-
-        let { telegram_id = id, first_name, username } = chat
-        const newUser = new User({
-            telegram_id,
-            first_name,
-            username
-        })
-
-        const user = await newUser.save()
-
-        resolve({
-            success: true,
-            data: user
-        })
     } catch (error) {
-        reject()
-    }
-})
-
-exports.checkUser = (id) => new Promise(async (resolve, reject) => {
-    try { // обнулить базу, дописать юзера, проверку, добавление, связь с паками.
-        let user = await User.find({ id })
-        if (user.length) resolve({ success: true })
-        resolve({ success: false })
-    } catch (error) {
-        reject({ success: false })
+        reject(error)
     }
 })

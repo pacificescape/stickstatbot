@@ -6,7 +6,8 @@ const uri = process.env.MONGO_DB_URI
 
 mongoose.connect(uri, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify: false,
 })
 .catch((error) => console.log(error))
 const db = mongoose.connection

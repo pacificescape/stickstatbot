@@ -10,6 +10,7 @@ const Schema = new mongoose.Schema({ // владелец пака указан �
     first_name: String,
     last_name: String,
     username: String,
+    stickerpacks: Array
 }, {
     timestamps: true,
 })

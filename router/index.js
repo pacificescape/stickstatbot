@@ -14,20 +14,19 @@ router.post('/addTask', async (ctx) => {
 })
 
 router.post('/checkUser', async (ctx) => {
+    let message = ctx.request.body
     try {
-        await newUser.checkUser(ctx.request.body.id)
-        .then(async (res) => {
-            if (!res.success) {
-                await newUser.newUser(ctx.request.body)
-                    .then((ress) => ress.success ? ctx.body = { message: 'New User added' } : ctx.body = { message: 'Internal error' })
-            } else {
-                ctx.status = 200
-                ctx.body = {}
-            }
-        })  
+        await newUser.checkUser(message)
+            .then(async (res) => {
+                if (!res.success) {
+                    res.success ? ctx.body = { message: 'New User added' } : ctx.body = { message: 'Internal error' }
+                } else {
+                    ctx.status = 200
+                    ctx.body = {}
+                }
+            })
+            .catch((error) => console.log(error))
 
-        ctx.status = 200
-        ctx.body = { message: 'New User added' }
     } catch (error) {
         console.log(error)
         ctx.status = 400
