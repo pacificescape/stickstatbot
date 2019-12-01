@@ -3,17 +3,26 @@
 
 const mongoose = require('mongoose')
 
-
 const packStatsSchema = new mongoose.Schema({
-    sticker_pack: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'stickerPack',
-    },
-    stats: {
-        type: Object,
-    }
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  name: {
+    type: String,
+    unique: true,
+    required: true
+  },
+  title: String,
+  stats: [{
+    type: String,
+    date: Number,
+    installed: Number,
+    removed: Number,
+    usage: Number
+  }]
 }, {
-    timestamps: true,
+  timestamps: true
 })
 
 module.exports = mongoose.model('packStat', packStatsSchema, 'PackStats')

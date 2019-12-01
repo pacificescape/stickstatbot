@@ -4,8 +4,8 @@ const parseStats = require('./parseStats')
 const setStats = require('./setStats')
 
 module.exports = {
-    checkUser,
-    checkForward,
-    parseStats,
-    setStats,
+  checkUser,
+  checkForward,
+  parseStats,
+  setStats
 }

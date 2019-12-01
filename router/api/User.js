@@ -1,6 +1,4 @@
-const User = require('../db/models/user/user_model.js')
-
-
+const { User } = require('../../database/models')
 
 // exports.newUser = (stats) => new Promise(async (resolve, reject) => {
 //     try {
@@ -35,39 +33,39 @@ const User = require('../db/models/user/user_model.js')
 // создаёт и обновляет пользователя
 
 exports.checkUser = (message) => new Promise(async (resolve, reject) => {
-    let {
-        chat: {
-            id: telegram_id,
-            first_name = '',
-            last_name = '',
-            username = ''
-        } = {},
-        entities: {
-            0: {
-                url
-            }
-        } = {}
-    } = message
-    let userMsg = { telegram_id, first_name, last_name, username, stickerpacks: [url] }
-    try {
-        let user = await User.findOne({ telegram_id })
-        if (!user) {
-            user = new User(userMsg)
-            user.save()
-                .then(() => resolve(user))
-        }
+  let {
+    chat: {
+      id: telegram_id,
+      first_name = '',
+      last_name = '',
+      username = ''
+    } = {},
+    entities: {
+      0: {
+        url
+      }
+    } = {}
+  } = message
+  let userMsg = { telegram_id, first_name, last_name, username, stickerpacks: [url] }
+  try {
+    let user = await User.findOne({ telegram_id })
+    if (!user) {
+      user = new User(userMsg)
+      user.save()
+        .then(() => resolve(user))
+    }
 
-        if (user && !user.stickerpacks.includes(url)) user.stickerpacks.push(url)
+    if (user && !user.stickerpacks.includes(url)) user.stickerpacks.push(url)
 
-        await user.updateOne({
-            first_name,
-            last_name,
-            username,
-            stickerpacks: user.stickerpacks
-        })
+    await user.updateOne({
+      first_name,
+      last_name,
+      username,
+      stickerpacks: user.stickerpacks
+    })
 
-        resolve(user)
-    } catch (error) {
+    resolve(user)
+  } catch (error) {
     reject(error)
-}
+  }
 })

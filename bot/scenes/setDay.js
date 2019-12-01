@@ -21,18 +21,6 @@ setdayHandler.command('next', (ctx) => {
 setdayHandler.use((ctx) => ctx.replyWithMarkdown('Press `Next` button or type /next'))
 
 module.exports = setdayHandler
-    
-
-
-
-
-
-
-
-
-
-
-
 
 const superWizard = new WizardScene('super-wizard',
   (ctx) => {
