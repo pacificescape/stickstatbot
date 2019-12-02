@@ -1,14 +1,21 @@
 const parseType = require('./parseType')
 const parseMain = require('./parseMain')
+const LRU = require('lru-cache')
 
-module.exports = parseStats = async (ctx) => {
+const packInfos = new LRU({ max: 1000 })
+
+module.exports = async (ctx, next) => {
   let { entities, text } = ctx.message
   let name = entities[0].url.split('/')[4]
   let type = text.match(/ for \d{2,2}\/\d{2,2}\/\d{4,4}/g) ? 'day'
     : text.match(/ for \d{2,2}\/\d{4,4}/g) ? 'month'
       : text.match(/ for \d{4,4}/g) ? 'year' : 'main'
 
-  let stickers = await ctx.getStickerSet(name)
+  const stickers = packInfos.get(name) || await ctx.getStickerSet(name).catch(() => null)
+  let stats = {}
+
+  if (!stickers) return { error: true }
+  packInfos.set(name, stickers)
 
   switch (type) {
     case 'main':
@@ -23,8 +30,8 @@ module.exports = parseStats = async (ctx) => {
       console.log('type is invalid')
   }
 
-  stats = { ...stats, type, stickers, name }
-  return stats
+  ctx.state.data = { stats, type, stickers, name }
+  next()
 }
 
 // в модели преобразовать время в строку. и/или хранить тип

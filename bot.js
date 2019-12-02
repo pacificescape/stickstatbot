@@ -1,46 +1,47 @@
-// require('dotenv').config()
-
 const Telegraf = require('telegraf')
+const session = require('telegraf/session')
 const bot = new Telegraf(process.env.BOT_TOKEN)
 const {
-  checkUser,
-  checkForward,
-  setStats
+  db
+} = require('./bot/database')
+const {
+  setStats,
+  parseStats
 } = require('./bot/handlers')
 
-// bot.use((ctx, next) => {
-//     parseStats(ctx.message)
-//     .then((res) => {
-//         console.log(res)
-//     })
-// })
+const {
+  checkForward
+} = require('./bot/utils')
 
-bot.use(async (ctx, next) => {
-  if (!ctx.message.forward_from || ctx.message.forward_from.id != 429000) {
-    ctx.reply('Перешлите сообщение со статистикой стикерпака от @Stickers (команда /packstats)')
-  } else next()
-})
+const {
+  updateUser
+} = require('./bot/helpers')
+
+bot.context.db = db
+
+bot.use(session({ ttl: 60 * 5 }))
 
 bot.use((ctx, next) => {
-  checkForward(ctx.message) ? next() : ctx.reply('forwarded data is too old. you have only 5 minutes to forward stata')
+  checkForward(ctx, next)
 })
 
-// bot.use((ctx, next) => {
-//     console.log(ctx.message)
-//     checkUser(ctx.message)
-//     .then(() => next())
-//     .catch((err) => console.log(err))
+bot.use(async (ctx, next) => {
+  await parseStats(ctx, next)
+})
+bot.use(async (ctx, next) => {
+  ctx.session.userInfo = await updateUser(ctx)
+  next()
+})
+
+bot.on('message', setStats)
+// await setStats(ctx)
+//   .then((res) => {
+//     res.body.ok ? ctx.reply('Статистика успешно добалена!')
+//       : ctx.reply('server res:' + res.body.message)
+//   })
+// let pack = await ctx.getStickerSet('fkey123')
+// console.log(pack)
 // })
-
-bot.on('message', async (ctx) => {
-  await setStats(ctx)
-    .then((res) => {
-      res.body.ok ? ctx.reply('Статистика успешно добалена!')
-        : ctx.reply('server res:' + res.body.message)
-    })
-    // let pack = await ctx.getStickerSet('fkey123')
-    // console.log(pack)
-})
 
 bot.command('help', (ctx) => ctx.reply('перешлите мне сообщения со статистикой от бота'))
 

@@ -9,10 +9,10 @@ const User = new mongoose.Schema({ // владелец пака указан в 
   first_name: String,
   last_name: String,
   username: String,
-  stickerpacks: [{
-    type: String
-  }],
-  first_act: Number
+  stickerpacks: {
+    type: Array,
+    default: []
+  }
 }, {
   timestamps: true
 })

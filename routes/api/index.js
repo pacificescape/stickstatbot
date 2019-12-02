@@ -5,6 +5,10 @@ api
   .get('/addTask', require('./add-task'))
   .post('/addTask', require('./add-task'))
 
+api
+  .get('/setStats', () => console.log('setStats'))
+  .post('/setStats', () => console.log('setStats'))
+
 module.exports = api
 
 // router.post('/checkUser', async (ctx) => { // не нужен отдельный метод
