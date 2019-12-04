@@ -5,6 +5,7 @@ const Pack = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
+  private: Boolean,
   contains_masks: Boolean,
   is_animated: Boolean,
   name: {

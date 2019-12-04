@@ -24,4 +24,3 @@ module.exports = async (ctx, next) => {
 
   ctx.session.packInfo[pack.name] = pack
 }
-

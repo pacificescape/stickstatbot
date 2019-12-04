@@ -9,6 +9,10 @@ api
   .get('/setStats', () => console.log('setStats'))
   .post('/setStats', () => console.log('setStats'))
 
+api
+  .get('/getTop', require('./getTop'))
+  .post('/getTop', require('./getTop'))
+
 module.exports = api
 
 // router.post('/checkUser', async (ctx) => { // не нужен отдельный метод
