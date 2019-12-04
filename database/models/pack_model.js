@@ -28,24 +28,33 @@ const Pack = new mongoose.Schema({
     emoji: String,
     set_name: String,
     is_animated: Boolean,
-    file_id: String
-  }],
-  thumbs: [{
     file_id: String,
-    file_size: Number,
-    height: Number,
-    width: Number
+    thumb: Object
   }],
-  current_stats: {
+  main: {
+    total_installed: { type: Number, default: 0 },
+    total_removed: { type: Number, default: 0 },
+    total_usage: { type: Number, default: 0 },
+    date: Date
+  },
+  day: [{
     installed: { type: Number, default: 0 },
     removed: { type: Number, default: 0 },
-    Usage: { type: Number, default: 0 }
-  },
-  all_stats: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Stats'
-  }
-
+    usage: { type: Number, default: 0 },
+    date: Date
+  }],
+  month: [{
+    installed: { type: Number, default: 0 },
+    removed: { type: Number, default: 0 },
+    usage: { type: Number, default: 0 },
+    date: Date
+  }],
+  year: [{
+    installed: { type: Number, default: 0 },
+    removed: { type: Number, default: 0 },
+    usage: { type: Number, default: 0 },
+    date: Date
+  }]
 }, {
   timestamps: true
 })

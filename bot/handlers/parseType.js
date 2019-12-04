@@ -3,8 +3,8 @@ module.exports = (text) => {
 
   text = text.split(/\n/)
 
-  stats = {
-    day: Date.parse(day),
+  const stats = {
+    date: Date.parse(day),
     usage: +text[2].match(/\d+/)[0],
     installed: +text[3].match(/\d+/)[0],
     removed: +text[4].match(/\d+/)[0]

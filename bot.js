@@ -3,7 +3,7 @@ const session = require('telegraf/session')
 const bot = new Telegraf(process.env.BOT_TOKEN)
 const {
   db
-} = require('./bot/database')
+} = require('./database')
 const {
   setStats,
   parseStats
@@ -21,19 +21,15 @@ bot.context.db = db
 
 bot.use(session({ ttl: 60 * 5 }))
 
-bot.use((ctx, next) => {
-  checkForward(ctx, next)
-})
+bot.command('web', (ctx) => ctx.reply('http://localhost:3001/'))
+bot.command('help', (ctx) => ctx.reply('перешлите мне сообщения со статистикой от бота'))
 
-bot.use(async (ctx, next) => {
-  await parseStats(ctx, next)
-})
-bot.use(async (ctx, next) => {
-  ctx.session.userInfo = await updateUser(ctx)
-  next()
-})
+bot.use(checkForward)
+bot.use(parseStats)
+bot.use(updateUser)
 
 bot.on('message', setStats)
+
 // await setStats(ctx)
 //   .then((res) => {
 //     res.body.ok ? ctx.reply('Статистика успешно добалена!')
@@ -42,8 +38,6 @@ bot.on('message', setStats)
 // let pack = await ctx.getStickerSet('fkey123')
 // console.log(pack)
 // })
-
-bot.command('help', (ctx) => ctx.reply('перешлите мне сообщения со статистикой от бота'))
 
 bot.start(ctx => ctx.reply('Welcome'))
 bot.catch((err) => console.log(`Ooops, ecountered an error `, err))
