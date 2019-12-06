@@ -21,7 +21,7 @@ bot.context.db = db
 
 bot.use(session({ ttl: 60 * 5 }))
 
-bot.command('web', (ctx) => ctx.reply('http://localhost:3001/'))
+bot.command('web', (ctx) => ctx.reply('http://localhost:3000/')) // старница со стикерпаками
 bot.command('help', (ctx) => ctx.reply('перешлите мне сообщения со статистикой от бота'))
 
 bot.use(checkForward)

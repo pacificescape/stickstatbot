@@ -1,7 +1,6 @@
 {
   "name": "stickerstats",
-  "version": "0.0.43",
-  
+  "version": "0.0.44",
   "description": "",
   "main": "server.js",
   "scripts": {
@@ -17,6 +16,7 @@
     "koa": "^2.11.0",
     "koa-body": "^4.1.1",
     "koa-bodyparser": "^4.2.1",
+    "koa-cors": "0.0.16",
     "koa-logger": "^3.2.1",
     "koa-response-time": "^2.1.0",
     "koa-router": "^7.4.0",

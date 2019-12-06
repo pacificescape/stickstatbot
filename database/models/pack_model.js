@@ -19,38 +19,30 @@ const Pack = new mongoose.Schema({
     index: true,
     required: true
   },
+  thumb: String,
   size: {
     type: Number,
     required: true
   },
-  stickers: [{
-    width: Number,
-    height: Number,
-    emoji: String,
-    set_name: String,
-    is_animated: Boolean,
-    file_id: String,
-    thumb: Object
-  }],
-  main: {
+  main: { // добавить историю в main. сделать рейтлимит на добавление. облегчить модель
     total_installed: { type: Number, default: 0 },
     total_removed: { type: Number, default: 0 },
     total_usage: { type: Number, default: 0 },
     date: Date
   },
-  day: [{
+  day: [{ // вынести?
     installed: { type: Number, default: 0 },
     removed: { type: Number, default: 0 },
     usage: { type: Number, default: 0 },
     date: Date
   }],
-  month: [{
+  month: [{ // вынести?
     installed: { type: Number, default: 0 },
     removed: { type: Number, default: 0 },
     usage: { type: Number, default: 0 },
     date: Date
   }],
-  year: [{
+  year: [{ // вынести?
     installed: { type: Number, default: 0 },
     removed: { type: Number, default: 0 },
     usage: { type: Number, default: 0 },
