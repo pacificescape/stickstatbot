@@ -5,7 +5,6 @@ const logger = require('koa-logger')
 const responseTime = require('koa-response-time')
 const bodyParser = require('koa-bodyparser')
 const Koa = require('koa')
-const cors = require('koa-cors')
 const app = new Koa()
 
 require('./bot.js')
@@ -48,7 +47,7 @@ app.use(route.routes())
 db.connection.once('open', () => {
   console.log('Connected to MongoDB')
 
-  const port = process.env.PORT || 3001
+  const port = process.env.PORT || 3000
 
   app.listen(port, () => {
     console.log('Listening on localhost, port', port)
