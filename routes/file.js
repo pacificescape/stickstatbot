@@ -1,3 +1,4 @@
+const mime = require('mime')
 const got = require('got')
 const {
   getFile
@@ -21,7 +22,7 @@ module.exports = async (ctx) => {
   })
 
   ctx.response.set('cache-control', 'public, max-age=31536000')
-  ctx.response.set('content-type', 'video/mp4')
+  ctx.response.set('content-type', mime.getType(file.fileInfo.file_path))
 
   ctx.body = fileStream
 }
