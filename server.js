@@ -41,7 +41,7 @@ const {
 } = require('./routes')
 
 route.use('/api', routeApi.routes())
-route.get('/file/:filgeId', routeFile)
+route.get('/file/:fileId', routeFile)
 
 app.use(route.routes())
 // app.use(route.allowedMethods())
