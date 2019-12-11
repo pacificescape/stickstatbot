@@ -1,9 +1,9 @@
 const routeApi = require('./api')
-const file = require('./file')
+const routeFile = require('./file')
 const login = require('./login')
 
 module.exports = {
   routeApi,
-  file,
+  routeFile,
   login
 }

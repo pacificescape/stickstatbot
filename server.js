@@ -36,10 +36,12 @@ app.use(async (ctx, next) => {
 const route = new Router()
 
 const {
+  routeFile,
   routeApi
 } = require('./routes')
 
 route.use('/api', routeApi.routes())
+route.get('/file/:filgeId', routeFile)
 
 app.use(route.routes())
 // app.use(route.allowedMethods())
