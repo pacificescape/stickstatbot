@@ -1,7 +1,5 @@
-const {
-  parseType,
-  parseMainStat
-} = require('.')
+const parseType = require('./parseType')
+const parseMain = require('./parseMain')
 const LRU = require('lru-cache')
 
 const packInfos = new LRU({ max: 1000 })
@@ -21,7 +19,7 @@ module.exports = async (ctx, next) => {
 
   switch (type) {
     case 'main':
-      stats = parseMainStat(text)
+      stats = parseMain(text)
       break
     case 'day':
     case 'month':
