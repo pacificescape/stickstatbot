@@ -10,5 +10,4 @@ module.exports = (text) => {
 
   return stats
 }
-// доделать обработку "вчера" и "сегодня" из /packstats
-
+//  доделать обработку "вчера" и "сегодня" из /packstats
