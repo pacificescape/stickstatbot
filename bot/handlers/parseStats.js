@@ -1,5 +1,7 @@
-const parseType = require('.')
-const parseMain = require('.')
+const {
+  parseType,
+  parseMain
+} = require('.')
 const LRU = require('lru-cache')
 
 const packInfos = new LRU({ max: 1000 })
