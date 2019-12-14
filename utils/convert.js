@@ -1,28 +1,21 @@
-const ffmpeg = require('./ffmpeg')
-const fs = require('fs')
+const sharp = require('sharp')
 
-module.exports = (picture) => {
-  return new Promise((resolve, reject) => {
-    let stream = fs.createWriteStream('png.png')
-    let buffers = []
-    ffmpeg(picture)
-      .format('png')
-      .on('error', function (err) {
-        console.log('An error occurred: ' + err.message)
-        reject(err)
-      })
-      .on('end', function () {
-        console.log(`Finished ...`)
-      })
-      .pipe()
+module.exports = async (webpBuffer) => {
+  // let stream = fs.createWriteStream('png.png')
+  // let buffers = []
 
-    stream.on('data', (data) => {
-      // console.log(data)
-      buffers.push(data)
-    })
-    stream.on('end', () => {
-      console.log('stream end')
-      resolve(Buffer.concat(buffers))
-    })
-  })
+  const bufferPng = await sharp(webpBuffer)
+    .png()
+    .toBuffer()
+
+  // stream.on('data', (data) => {
+  //   // console.log(data)
+  //   buffers.push(data)
+  // })
+  // stream.on('end', () => {
+  //   console.log('stream end')
+  //   resolve(Buffer.concat(buffers))
+  // })
+
+  return bufferPng
 }
