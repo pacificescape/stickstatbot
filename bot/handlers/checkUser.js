@@ -13,6 +13,5 @@ module.exports = (message) => new Promise(async (resolve, reject) => {
       })
   } catch (error) {
     console.log(error)
-    reject()
   }
 })

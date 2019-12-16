@@ -5,7 +5,7 @@ module.exports = (ctx, next) => {
   }
 
   if (ctx.message.date - ctx.message.forward_date >= process.env.FORWARD_TTL) {
-    ctx.reply('Перешлите статистику отправленную менее 5 минут назад')
+    ctx.reply(`Перешлите статистику отправленную менее ${process.env.FORWARD_TTL / 60} минут назад`)
     return
   }
   next()
