@@ -3,11 +3,13 @@ const parseStats = require('./parseStats')
 const parseMain = require('./parseMain')
 const setStats = require('./setStats')
 const parseType = require('./parseType')
+const webAuth = require('./web-auth')
 
 module.exports = {
   checkUser,
   parseStats,
   setStats,
   parseMain,
-  parseType
+  parseType,
+  webAuth
 }

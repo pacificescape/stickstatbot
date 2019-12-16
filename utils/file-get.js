@@ -2,7 +2,7 @@ const { Telegram } = require('telegraf')
 const LRU = require('lru-cache')
 
 const tg = new Telegram(process.env.BOT_TOKEN)
-const fileInfos = new LRU({ max: 1000 })
+const fileInfos = new LRU({ max: 1000, maxAge: 1000 * 60 * 45 })
 const fileLinks = new LRU({ max: 1000, maxAge: 1000 * 60 * 45 })
 
 module.exports = async (fileId) => {

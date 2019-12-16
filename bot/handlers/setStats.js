@@ -9,7 +9,7 @@ module.exports = async (ctx, next) => {
   if (!pack) {
     pack = new ctx.db.Pack()
     // pack.day pack.month pack.year = []
-    pack.thumb = data.stickers.stickers[0].thumb
+    // pack.thumb = data.stickers.stickers[0].thumb
     pack.owner = ctx.session.userInfo
     pack.name = data.name
     pack.title = data.stickers.title
@@ -18,7 +18,8 @@ module.exports = async (ctx, next) => {
     pack.is_animated = data.stickers.stickers.is_animated
     pack.contains_masks = data.stickers.stickers.contains_masks
   }
-
+  console.log(data.stickers.stickers[0].file_id)
+  pack.thumb = data.stickers.stickers[0].file_id
   // pack[data.type][0] && pack[data.type][0].date ?
   //   new Date(pack[data.type][0].date) - new Date(data.stats.date) < 86400000 ?
   //    new Date(pack[data.type][0].date).getDate() === new Date(data.stats.date).getDate() ?
@@ -26,21 +27,19 @@ module.exports = async (ctx, next) => {
 
   if (data.type === 'total') pack.main = data.stats
   if (pack[data.type][0] && pack[data.type][0].date) {
-    console.log(new Date(pack[data.type][0].date.toString()))
-    console.log(new Date(data.stats.date))
     let a = Date.parse(pack[data.type][0].date.toString())
     let b = data.stats.date
-    console.log(StartOfDayMs(a))
-    console.log(StartOfDayMs(b))
+    console.time('123')
     if (StartOfDayMs(a) === StartOfDayMs(b)) {
       pack[data.type].shift()
     }
+    console.timeLog('123')
   }
 
   pack[data.type].splice(0, 0, data.stats)
   pack.size = data.stickers.stickers.length
-  pack.thumb = data.stickers.stickers[0].thumb.file_id
-
+  pack.thumb = data.stickers.stickers[0].file_id
+  console.timeLog('123')
   await pack.save()
     .then(() => ctx.reply(`Статистика для '${pack.title}' успешно добавлена`))
     .catch((err) => console.log(err))
@@ -48,4 +47,6 @@ module.exports = async (ctx, next) => {
   if (!ctx.session.stickersInfo) ctx.session.stickersInfo = data.stickers
 
   ctx.session.packInfo[pack.name] = pack
+
+  console.timeEnd('123')
 }
