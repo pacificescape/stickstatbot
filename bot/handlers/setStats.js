@@ -19,12 +19,31 @@ module.exports = async (ctx, next) => {
     pack.contains_masks = data.stickers.stickers.contains_masks
   }
 
-  if (data.type === 'main') Object.assign(pack[data.type], data.stats)
-  else pack[data.type].push(data.stats)
+  // pack[data.type][0] && pack[data.type][0].date ?
+  //   new Date(pack[data.type][0].date) - new Date(data.stats.date) < 86400000 ?
+  //    new Date(pack[data.type][0].date).getDate() === new Date(data.stats.date).getDate() ?
+  const StartOfDayMs = (ms) => ms - (ms % (86400 * 1000))
+
+  if (data.type === 'total') pack.main = data.stats
+  if (pack[data.type][0] && pack[data.type][0].date) {
+    console.log(new Date(pack[data.type][0].date.toString()))
+    console.log(new Date(data.stats.date))
+    let a = Date.parse(pack[data.type][0].date.toString())
+    let b = data.stats.date
+    console.log(StartOfDayMs(a))
+    console.log(StartOfDayMs(b))
+    if (StartOfDayMs(a) === StartOfDayMs(b)) {
+      pack[data.type].shift()
+    }
+  }
+
+  pack[data.type].splice(0, 0, data.stats)
   pack.size = data.stickers.stickers.length
   pack.thumb = data.stickers.stickers[0].thumb.file_id
 
-  await pack.save().catch((err) => console.log(err))
+  await pack.save()
+    .then(() => ctx.reply(`Статистика для '${pack.title}' успешно добавлена`))
+    .catch((err) => console.log(err))
 
   if (!ctx.session.stickersInfo) ctx.session.stickersInfo = data.stickers
 

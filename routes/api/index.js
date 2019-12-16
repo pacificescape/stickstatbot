@@ -2,6 +2,16 @@ const Router = require('koa-router')
 const api = new Router()
 
 api
+  .get('/authUser', require('./user-auth'))
+  .post('/authUser', require('./user-auth'))
+
+api.use(async (ctx, next) => {
+  ctx.assert(ctx.session.user, 401, 'Unauthorized')
+
+  await next()
+})
+
+api
   .get('/addTask', require('./add-task'))
   .post('/addTask', require('./add-task'))
 

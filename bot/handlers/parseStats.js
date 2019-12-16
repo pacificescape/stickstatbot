@@ -9,7 +9,7 @@ module.exports = async (ctx, next) => {
   let name = entities[0].url.split('/')[4]
   let type = text.match(/ for \d{2,2}\/\d{2,2}\/\d{4,4}/g) ? 'day'
     : text.match(/ for \d{2,2}\/\d{4,4}/g) ? 'month'
-      : text.match(/ for \d{4,4}/g) ? 'year' : 'main'
+      : text.match(/ for \d{4,4}/g) ? 'year' : 'total'
 
   const stickers = packInfos.get(name) || await ctx.getStickerSet(name).catch(() => null)
   let stats = {}
@@ -18,7 +18,7 @@ module.exports = async (ctx, next) => {
   packInfos.set(name, stickers)
 
   switch (type) {
-    case 'main':
+    case 'total':
       stats = parseMain(text)
       break
     case 'day':

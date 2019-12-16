@@ -30,6 +30,12 @@ const Pack = new mongoose.Schema({
     total_usage: { type: Number, default: 0 },
     date: Date
   },
+  total: [{ // добавить историю в main. сделать рейтлимит на добавление. облегчить модель
+    total_installed: Number,
+    total_removed: Number,
+    total_usage: Number,
+    date: Date
+  }],
   day: [{ // вынести?
     installed: { type: Number, default: 0 },
     removed: { type: Number, default: 0 },
