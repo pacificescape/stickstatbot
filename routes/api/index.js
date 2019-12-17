@@ -5,11 +5,11 @@ api
   .get('/authUser', require('./user-auth'))
   .post('/authUser', require('./user-auth'))
 
-api.use(async (ctx, next) => {
-  ctx.assert(ctx.session.user, 401, 'Unauthorized')
+// api.use(async (ctx, next) => {
+//   ctx.assert(ctx.session.user, 401, 'Unauthorized')
 
-  await next()
-})
+//   await next()
+// })
 
 api
   .get('/addTask', require('./add-task'))
