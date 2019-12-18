@@ -29,17 +29,14 @@ module.exports = async (ctx, next) => {
   if (pack[data.type][0] && pack[data.type][0].date) {
     let a = Date.parse(pack[data.type][0].date.toString())
     let b = data.stats.date
-    console.time('123')
     if (StartOfDayMs(a) === StartOfDayMs(b)) {
       pack[data.type].shift()
     }
-    console.timeLog('123')
   }
 
   pack[data.type].splice(0, 0, data.stats)
   pack.size = data.stickers.stickers.length
   pack.thumb = data.stickers.stickers[0].file_id
-  console.timeLog('123')
   await pack.save()
     .then(() => ctx.reply(`Статистика для '${pack.title}' успешно добавлена`))
     .catch((err) => console.log(err))
@@ -48,5 +45,4 @@ module.exports = async (ctx, next) => {
 
   ctx.session.packInfo[pack.name] = pack
 
-  console.timeEnd('123')
 }
