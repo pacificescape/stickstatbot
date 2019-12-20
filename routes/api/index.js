@@ -5,12 +5,6 @@ api
   .get('/authUser', require('./user-auth'))
   .post('/authUser', require('./user-auth'))
 
-// api.use(async (ctx, next) => {
-//   ctx.assert(ctx.session.user, 401, 'Unauthorized')
-
-//   await next()
-// })
-
 api
   .get('/addTask', require('./add-task'))
   .post('/addTask', require('./add-task'))
@@ -22,6 +16,15 @@ api
 api
   .get('/getTop', require('./getTop'))
   .post('/getTop', require('./getTop'))
+
+api.use(async (ctx, next) => {
+  ctx.assert(ctx.session.user, 401, 'Unauthorized')
+
+  await next()
+})
+
+api
+  .get('/getMyPacks', require('./getMyPacks'))
 
 module.exports = api
 

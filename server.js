@@ -4,16 +4,21 @@ const Router = require('koa-router')
 const logger = require('koa-logger')
 const responseTime = require('koa-response-time')
 const bodyParser = require('koa-bodyparser')
+const session = require('koa-session')
 const Koa = require('koa')
 const app = new Koa()
 
 require('./bot.js')
 
+app.keys = [process.env.SESSION_SECRET]
 // app.use(cors())
 app.use(logger())
 app.use(responseTime())
 app.use(bodyParser())
 app.use(require('./helpers').helpersApi)
+
+
+app.use(session(app))
 
 const {
   db
@@ -36,10 +41,12 @@ app.use(async (ctx, next) => {
 const route = new Router()
 
 const {
+  routeLogin,
   routeFile,
   routeApi
 } = require('./routes')
 
+route.get('/login', routeLogin)
 route.use('/api', routeApi.routes())
 route.get('/file/:fileId', routeFile)
 

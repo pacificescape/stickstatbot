@@ -44,5 +44,4 @@ module.exports = async (ctx, next) => {
   if (!ctx.session.stickersInfo) ctx.session.stickersInfo = data.stickers
 
   ctx.session.packInfo[pack.name] = pack
-
 }
