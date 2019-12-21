@@ -1,7 +1,6 @@
 const { createHash, createHmac } = require('crypto')
 
-
-function checkSignature({ hash, ...data }) {
+function checkSignature ({ hash, ...data }) {
   const secret = createHash('sha256')
     .update(process.env.BOT_TOKEN)
     .digest()
@@ -17,22 +16,22 @@ function checkSignature({ hash, ...data }) {
 }
 
 module.exports = async (ctx) => {
-  let groupId = ''
+  let userId = ''
 
-  if (req.query.group_id) {
-    groupId = req.query.group_id
-    delete req.query.group_id
+  if (ctx.request.query.user_id) {
+    userId = ctx.request.query.user_id
+    delete ctx.request.query.user_id
   }
 
-  if (!checkSignature(req.query)) {
-    req.session.destroy()
-    return res.send(400, 'error')
+  if (!checkSignature(ctx.request.query)) {
+    ctx.session.destroy()
+    return ctx.res.send(400, 'error')
   }
 
-  req.session.user = await req.context.db.User.findOne({
-    telegram_id: req.query.id,
+  ctx.session.user = await ctx.state.db.User.findOne({
+    telegram_id: ctx.request.query.id
   })
 
-  if (groupId) res.redirect(`/group/${groupId}`)
-  return res.redirect('/')
+  if (userId) ctx.redirect(`/mypacks/${userId}`)
+  return ctx.redirect('/')
 }

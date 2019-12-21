@@ -40,12 +40,10 @@ bot.on('message', setStats)
 // console.log(pack)
 // })
 
-bot.start(ctx => ctx.reply('Welcome'))
+bot.start(ctx => ctx.reply('Привет, этот бот создан для ведения статистики ваших стикерпаков!'))
 bot.catch((err) => console.log(`Ooops, ecountered an error `, err))
 bot.launch()
   .then(() => console.log('bot started'))
 
-// проверять добавлена ли главная статистика packstatsю без нее не давать делать ничего
-// проверять не только ттл но и совпадения числа
-// scene для получения топа стикеров в паке. качать файл для отображения. создать коллекцию с file_id. модуль получения файла по айди.
+// качать файл для отображения. создать коллекцию с file_id. модуль получения файла по айди.
 // getStickerSet -> StickerSet object is returned.
