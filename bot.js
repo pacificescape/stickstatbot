@@ -7,7 +7,8 @@ const {
 const {
   setStats,
   parseStats,
-  webAuth
+  webAuth,
+  getStats
 } = require('./bot/handlers')
 
 const {
@@ -22,6 +23,7 @@ bot.context.db = db
 
 bot.use(session({ ttl: 60 * 5 }))
 
+bot.command('packs', getStats) // старница со стикерпаками
 bot.command('web', webAuth) // старница со стикерпаками
 bot.command('help', (ctx) => ctx.reply('перешлите мне сообщения со статистикой от бота'))
 
@@ -31,21 +33,7 @@ bot.use(updateUser)
 
 bot.on('message', setStats)
 
-// await setStats(ctx)
-//   .then((res) => {
-//     res.body.ok ? ctx.reply('Статистика успешно добалена!')
-//       : ctx.reply('server res:' + res.body.message)
-//   })
-// let pack = await ctx.getStickerSet('fkey123')
-// console.log(pack)
-// })
-
 bot.start(ctx => ctx.reply('Welcome'))
 bot.catch((err) => console.log(`Ooops, ecountered an error `, err))
 bot.launch()
   .then(() => console.log('bot started'))
-
-// проверять добавлена ли главная статистика packstatsю без нее не давать делать ничего
-// проверять не только ттл но и совпадения числа
-// scene для получения топа стикеров в паке. качать файл для отображения. создать коллекцию с file_id. модуль получения файла по айди.
-// getStickerSet -> StickerSet object is returned.

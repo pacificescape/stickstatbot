@@ -32,6 +32,7 @@ module.exports = (ctx) => {
     fileStream.on('end', async () => {
       buffer = Buffer.concat(buffer)
       ctx.body = await convert(buffer)
+        .catch(error => console.log(error))
       resolve()
     })
 

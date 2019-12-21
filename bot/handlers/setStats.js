@@ -18,8 +18,8 @@ module.exports = async (ctx, next) => {
     pack.is_animated = data.stickers.stickers.is_animated
     pack.contains_masks = data.stickers.stickers.contains_masks
   }
-  console.log(data.stickers.stickers[0].file_id)
-  pack.thumb = data.stickers.stickers[0].file_id
+  pack.thumb = data.stickers.stickers[0].is_animated
+    ? data.stickers.stickers[0].thumb.file_id : data.stickers.stickers[0].file_id
   // pack[data.type][0] && pack[data.type][0].date ?
   //   new Date(pack[data.type][0].date) - new Date(data.stats.date) < 86400000 ?
   //    new Date(pack[data.type][0].date).getDate() === new Date(data.stats.date).getDate() ?
@@ -36,7 +36,6 @@ module.exports = async (ctx, next) => {
 
   pack[data.type].splice(0, 0, data.stats)
   pack.size = data.stickers.stickers.length
-  pack.thumb = data.stickers.stickers[0].file_id
   await pack.save()
     .then(() => ctx.reply(`Статистика для '${pack.title}' успешно добавлена`))
     .catch((err) => console.log(err))
