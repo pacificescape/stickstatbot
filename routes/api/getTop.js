@@ -6,7 +6,8 @@ module.exports = async (ctx) => { // дописать кеш с ттл, выво
       title: pack.title,
       main: pack.main,
       name: pack.name,
-      thumb: pack.thumb
+      thumb: pack.thumb,
+      total: pack.total
     }
   })
   // result = await Promise.all(result)
