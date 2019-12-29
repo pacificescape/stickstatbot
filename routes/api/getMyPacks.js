@@ -1,5 +1,4 @@
 module.exports = async (ctx) => {
-
   let result = ctx.session.user.stickerpacks.map(async (name) => {
     let pack = await ctx.state.db.Pack.findOne({ name })
 
@@ -7,7 +6,8 @@ module.exports = async (ctx) => {
       title: pack.title,
       main: pack.main,
       name: pack.name,
-      thumb: pack.thumb
+      thumb: pack.thumb,
+      total: pack.total
     }
   })
 

@@ -17,7 +17,6 @@ app.use(responseTime())
 app.use(bodyParser())
 app.use(require('./helpers').helpersApi)
 
-
 app.use(session(app))
 
 const {
