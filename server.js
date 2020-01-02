@@ -17,7 +17,12 @@ app.use(responseTime())
 app.use(bodyParser())
 app.use(require('./helpers').helpersApi)
 
-app.use(session(app))
+const CONFIG = {
+  key: 'session',
+  maxAge: 4 * 7 * 24 * 60 * 60 * 1000
+}
+
+app.use(session(CONFIG, app))
 
 const {
   db
