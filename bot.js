@@ -34,6 +34,8 @@ bot.use(checkForward)
 bot.use(parseStats)
 bot.use(updateUser)
 
+bot.on('message', setStats)
+
 bot.start(ctx => ctx.reply('Welcome'))
 bot.catch((err) => console.log(`Ooops, ecountered an error `, err))
 bot.launch()
