@@ -30,8 +30,6 @@ bot.command('help', (ctx) => ctx.reply('перешлите мне сообщен
 
 bot.command('storeAllThumbs', (ctx) => storeAllThumbs(ctx))
 
-bot.on('message', setStats)
-
 bot.use(checkForward)
 bot.use(parseStats)
 bot.use(updateUser)
