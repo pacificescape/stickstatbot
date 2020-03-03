@@ -47,12 +47,14 @@ const route = new Router()
 const {
   routeLogin,
   routeFile,
-  routeApi
+  routeApi,
+  routeThumb
 } = require('./routes')
 
 route.get('/login', routeLogin)
 route.use('/api', routeApi.routes())
 route.get('/file/:fileId', routeFile)
+route.get('/thumb/:fileId', routeThumb)
 
 app.use(route.routes())
 // app.use(route.allowedMethods())

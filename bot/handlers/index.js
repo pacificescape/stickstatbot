@@ -5,6 +5,7 @@ const setStats = require('./setStats')
 const parseType = require('./parseType')
 const webAuth = require('./web-auth')
 const getStats = require('./getStats')
+const storeAllThumbs = require('./storeAllThumbs')
 
 module.exports = {
   checkUser,
@@ -13,5 +14,6 @@ module.exports = {
   parseMain,
   parseType,
   webAuth,
-  getStats
+  getStats,
+  storeAllThumbs
 }

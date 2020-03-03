@@ -1,3 +1,5 @@
+const storeThumb = require('./storeThumb')
+
 module.exports = async (ctx, next) => {
   let data = ctx.state.data
   let pack
@@ -41,6 +43,8 @@ module.exports = async (ctx, next) => {
     .catch((err) => console.log(err))
 
   if (!ctx.session.stickersInfo) ctx.session.stickersInfo = data.stickers
+
+  storeThumb(pack.thumb)
 
   ctx.session.packInfo[pack.name] = pack
 }
