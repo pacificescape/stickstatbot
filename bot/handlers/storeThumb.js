@@ -7,7 +7,7 @@ const {
 } = require('../../utils')
 const dir = path.resolve(__dirname, '../../thumbs/')
 
-module.exports = async (fileId) => {
+module.exports = async (fileId, ctx, resolve) => {
   console.log(`${dir + '/' + fileId}.png`)
   try {
     fs.accessSync(dir, fs.constants.F_OK)
@@ -44,5 +44,7 @@ module.exports = async (fileId) => {
       if (err) throw err
       console.log('The "data to append" was appended to file!')
     })
+    ctx.body = png
+    resolve()
   })
 }

@@ -11,9 +11,9 @@ module.exports = (ctx) => {
     ctx.assert(fileId, 400, 'fileId empty')
 
     let buffer = []
-    const fileStream = await fs.createReadStream(path.resolve(dir, `${fileId}.png`))
-    fileStream.on('error', error => {
-      storeThumb(fileId)
+    let fileStream = await fs.createReadStream(path.resolve(dir, `${fileId}.png`))
+    fileStream.on('error', async error => {
+      await storeThumb(fileId, ctx, resolve)
       console.log(error)
     })
 
