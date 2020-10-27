@@ -38,5 +38,4 @@ bot.on('message', setStats)
 
 bot.start(ctx => ctx.reply('Welcome'))
 bot.catch((err) => console.log(`Ooops, ecountered an error `, err))
-bot.launch()
-  .then(() => console.log('bot started'))
+bot.launch().then(() => console.log('bot started'))

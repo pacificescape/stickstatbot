@@ -17,6 +17,10 @@ api
   .get('/getTop', require('./getTop'))
   .post('/getTop', require('./getTop'))
 
+api
+  .get('/QuotAf', require('./QuotAf'))
+  .post('/QuotAf', require('./QuotAf'))
+
 api.use(async (ctx, next) => {
   ctx.assert(ctx.session.user, 401, 'Unauthorized')
 
