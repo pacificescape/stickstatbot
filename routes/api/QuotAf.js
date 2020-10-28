@@ -9,9 +9,9 @@ module.exports = async (ctx) => { // дописать кеш с ттл, выво
       packs: day.packs,
       inline: day.inline,
       private: day.private,
-      users: day.users,
+      users: day.users.length,
       generated: day.generated,
-      latency: day.latency
+      latency: day.latency / day.generated / 1000
     }
   })
   // result = await Promise.all(result)
