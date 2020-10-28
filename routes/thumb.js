@@ -6,15 +6,15 @@ const storeThumb = require('../bot/handlers/storeThumb')
 module.exports = (ctx) => {
   return new Promise(async (resolve) => {
     const { fileId } = ctx.params
-    console.log(path.resolve(dir, `${fileId}.png`))
+    // console.log(path.resolve(dir, `${fileId}.png`))
 
     ctx.assert(fileId, 400, 'fileId empty')
 
     let buffer = []
     let fileStream = await fs.createReadStream(path.resolve(dir, `${fileId}.png`))
-    fileStream.on('error', async error => {
+    fileStream.on('error', async () => {
       await storeThumb(fileId, ctx, resolve)
-      console.log(error)
+      // console.log(error)
     })
 
     fileStream.on('data', (data) => {
